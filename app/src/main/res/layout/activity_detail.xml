@@ -33,6 +33,7 @@
         android:textColor="@android:color/black"
         android:gravity="center"
         android:textSize="28sp"
+        android:background="#992c3e50"
         android:textStyle="bold" />
     <TextView
         android:id="@+id/idViewDetail"
@@ -103,14 +104,23 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal"></LinearLayout>
             </HorizontalScrollView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Talents"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:layout_marginTop="-40dp"
+                android:textSize="23sp"
+                android:background="#992c3e50"
+                android:textStyle="bold" />
     <TextView
         android:id="@+id/abnameViewDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:layout_marginTop="-40dp"
-        android:gravity="center"
-        android:textSize="18sp"
+        android:layout_marginLeft="5dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:text="abname"/>
     <TextView
@@ -118,7 +128,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:gravity="center"
+        android:layout_marginLeft="5dp"
         android:textSize="18sp"
         android:text="abdesc"/>
     <TextView
@@ -126,8 +136,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:gravity="center"
-        android:textSize="18sp"
+        android:layout_marginLeft="5dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:text="secabname"/>
     <TextView
@@ -135,16 +145,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:gravity="center"
+        android:layout_marginLeft="5dp"
         android:textSize="18sp"
         android:text="secabdesc"/>
-    <TextView
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Talent Caché"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                android:textSize="23sp"
+                android:background="#992c3e50"
+                android:textStyle="bold" />
+            <TextView
         android:id="@+id/hidabnameViewDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:gravity="center"
-        android:textSize="18sp"
+                android:layout_marginLeft="5dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:text="hidabname"/>
     <TextView
@@ -152,7 +171,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
-        android:gravity="center"
+        android:layout_marginLeft="5dp"
         android:textSize="18sp"
         android:layout_marginBottom="30dp"
         android:text="hidabdesc"/>
@@ -163,7 +182,8 @@
                 android:gravity="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="Faiblesses :"/>
+                android:background="#992c3e50"
+                android:text="Faiblesses"/>
             <HorizontalScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -181,7 +201,8 @@
                 android:gravity="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="Resistances :"/>
+                android:background="#992c3e50"
+                android:text="Resistances"/>
             <HorizontalScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -199,7 +220,8 @@
                 android:gravity="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="Immunités :"/>
+                android:background="#992c3e50"
+                android:text="Immunités"/>
             <HorizontalScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -213,17 +235,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Statistiques"
+                android:layout_marginTop="30dp"
                 android:textColor="@android:color/black"
                 android:gravity="center"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="Statistiques"/>
+                android:textSize="23sp"
+                android:background="#992c3e50"
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/statpvViewDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="33dp"
                 android:textSize="18sp"
                 android:text="statpv"/>
             <TextView
@@ -231,7 +255,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="28dp"
                 android:textSize="18sp"
                 android:text="statatt"/>
             <TextView
@@ -239,7 +263,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="25dp"
                 android:textSize="18sp"
                 android:text="statdef"/>
             <TextView
@@ -247,7 +271,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="6dp"
                 android:textSize="18sp"
                 android:text="statattspe"/>
             <TextView
@@ -255,7 +279,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="3dp"
                 android:textSize="18sp"
                 android:text="statdefspe"/>
             <TextView
@@ -263,7 +287,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="30dp"
                 android:textSize="18sp"
                 android:text="statvit"/>
             <TextView
@@ -271,9 +295,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="21dp"
                 android:textSize="18sp"
                 android:text="totalstat"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="-173dp"
+                android:orientation="vertical"
+                android:id="@+id/rectpv">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/rectatt">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/rectdef">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/rectattspe">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/rectdefspe">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/rectvit">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/recttotal">
+            </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>
