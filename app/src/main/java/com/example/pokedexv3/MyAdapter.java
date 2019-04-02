@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,11 +19,13 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Filterable {
 
     private List<PokemonDetails> pokemonDetails;
+    private List<PokemonDetails> pokemonDetailsFull;
     private Context context;
     private OnItemClickListener mListener;
 
@@ -35,6 +39,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     public MyAdapter(List<PokemonDetails> pokemonDetails, Context context){
         this.pokemonDetails=pokemonDetails;
+        pokemonDetailsFull = new ArrayList<>(pokemonDetails);
         this.context = context;
     }
 
@@ -95,4 +100,37 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
         }
     }
+
+    @Override
+    public Filter getFilter() {
+        return filtre;
+    }
+
+    private Filter filtre = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<PokemonDetails> filteredList = new ArrayList<>();
+            if(constraint == null || constraint.length() == 0){
+                filteredList.addAll(pokemonDetailsFull);
+            }
+            else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for(PokemonDetails pokemon : pokemonDetailsFull){
+                    if(pokemon.getName().toLowerCase().contains(filterPattern)){
+                        filteredList.add(pokemon);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            pokemonDetails.clear();
+            pokemonDetails.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }

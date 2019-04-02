@@ -7,6 +7,11 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
+import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -58,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
     private static final String URL_DATA = "https://raw.githubusercontent.com/gourgues/pokedex/master/pokedex.json";
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
     private MyAdapter myAdapter;
 
     private List<PokemonDetails> pokemonDetails;
@@ -148,6 +152,31 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
                 });
             RequestQueue requestQueue =  Volley.newRequestQueue(this);
             requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                myAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
     }
 
     @Override

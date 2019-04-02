@@ -1,6 +1,13 @@
 package com.example.pokedexv3;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -195,6 +202,20 @@ public class DetailActivity extends AppCompatActivity{
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public void printRect(float stat, LinearLayout linearLayout, String colorname){
+
+        Paint paint = new Paint();
+        paint.setColor(Color.parseColor(colorname));
+        Bitmap bg = Bitmap.createBitmap(480,220,Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bg);
+        canvas.drawRect(150,50,stat,200,paint);
+        //LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layoutrect);
+        linearLayout.setBackground(new BitmapDrawable(bg));
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
@@ -283,5 +304,30 @@ public class DetailActivity extends AppCompatActivity{
         textViewStatdefspe.setText("def. spé : "+pokemonStatdefspe);
         textViewStatvit.setText(   "vit. : "+pokemonStatvit);
         textViewTotaltat.setText(  "total : "+pokemonTotalstat);
+
+        float pv = 150+(Integer.parseInt(pokemonStatpv))*1.25f;
+        float att = 150+(Integer.parseInt(pokemonStatatt))*1.25f;
+        float def = 150+(Integer.parseInt(pokemonStatdef))*1.25f;
+        float attspe = 150+(Integer.parseInt(pokemonStatattspe))*1.25f;
+        float defspe = 150+(Integer.parseInt(pokemonStatdefspe))*1.25f;
+        float vit = 150+(Integer.parseInt(pokemonStatvit))*1.25f;
+        float total = 150+(Integer.parseInt(pokemonTotalstat))/2.2f;
+
+        LinearLayout linearLayoutpv = (LinearLayout) findViewById(R.id.rectpv);
+        LinearLayout linearLayoutatt = (LinearLayout) findViewById(R.id.rectatt);
+        LinearLayout linearLayoutdef = (LinearLayout) findViewById(R.id.rectdef);
+        LinearLayout linearLayoutattspe = (LinearLayout) findViewById(R.id.rectattspe);
+        LinearLayout linearLayoutdefspe = (LinearLayout) findViewById(R.id.rectdefspe);
+        LinearLayout linearLayoutvit = (LinearLayout) findViewById(R.id.rectvit);
+        LinearLayout linearLayouttotal = (LinearLayout) findViewById(R.id.recttotal);
+
+        printRect(pv,linearLayoutpv,"red");
+        printRect(att,linearLayoutatt,"#fff3632b");//orange
+        printRect(def,linearLayoutdef,"yellow");
+        printRect(attspe,linearLayoutattspe,"blue");
+        printRect(defspe,linearLayoutdefspe,"green");
+        printRect(vit,linearLayoutvit,"magenta");
+        printRect(total,linearLayouttotal,"grey");
+
     }
 }
