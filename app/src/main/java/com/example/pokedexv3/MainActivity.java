@@ -1,4 +1,9 @@
 package com.example.pokedexv3;
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import android.app.ProgressDialog;
 import android.support.v4.content.res.TypedArrayUtils;
@@ -25,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
 
     private RecyclerView recyclerView;
     private MyAdapter myAdapter;
+    private Context context;
+
+   // private RecyclerView.LayoutManager mLayoutManager;
 
     private List<PokemonDetails> pokemonDetails;
 
@@ -71,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loadData();
+        buildRecyclerView();
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -79,6 +90,38 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
         pokemonDetails = new ArrayList<>();
 
         loadRecyclerViewData();
+
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(pokemonDetails);
+        editor.putString("task list", json);
+        editor.apply();
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("task list", null);
+        Type type = new TypeToken<ArrayList<PokemonDetails>>() {}.getType();
+        pokemonDetails = gson.fromJson(json, type);
+
+        if (pokemonDetails == null) {
+            pokemonDetails = new ArrayList<>();
+        }
+    }
+
+    private void buildRecyclerView() {
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        //mLayoutManager = new LinearLayoutManager(this);
+        myAdapter = new MyAdapter(pokemonDetails,context);
+
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setAdapter(myAdapter);
     }
 
     private void loadRecyclerViewData(){
@@ -133,10 +176,14 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
                                         pokemonWeakness, pokemonResistance, pokemonImmunity,
                                         pokemonStatpv, pokemonStatatt, pokemonStatdef, pokemonStatattspe, pokemonStatdefspe, pokemonStatvit, pokemonTotalstat,
                                         pokemonImage, pokemonArtwork, pokemonSprite, pokemonShinysprite));
+
                             }
+                            saveData();
+
                             myAdapter = new MyAdapter(pokemonDetails, MainActivity.this);
                             recyclerView.setAdapter(myAdapter);
                             myAdapter.setOnItemClickListener(MainActivity.this);
+                            saveData();
 
                         } catch (JSONException e) {
                             e.printStackTrace();

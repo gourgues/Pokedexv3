@@ -219,7 +219,6 @@ public class DetailActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
         Intent intent = getIntent();
         String pokemonName = intent.getStringExtra(EXTRA_NAME);
         String pokemonId = intent.getStringExtra(EXTRA_ID);
