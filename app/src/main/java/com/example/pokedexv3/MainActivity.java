@@ -2,6 +2,10 @@ package com.example.pokedexv3;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.android.volley.Cache;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -30,6 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,16 +77,12 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
     private MyAdapter myAdapter;
     private Context context;
 
-   // private RecyclerView.LayoutManager mLayoutManager;
-
     private List<PokemonDetails> pokemonDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        loadData();
-        buildRecyclerView();
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -91,37 +92,6 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
 
         loadRecyclerViewData();
 
-    }
-
-    private void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(pokemonDetails);
-        editor.putString("task list", json);
-        editor.apply();
-    }
-
-    private void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("task list", null);
-        Type type = new TypeToken<ArrayList<PokemonDetails>>() {}.getType();
-        pokemonDetails = gson.fromJson(json, type);
-
-        if (pokemonDetails == null) {
-            pokemonDetails = new ArrayList<>();
-        }
-    }
-
-    private void buildRecyclerView() {
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        //mLayoutManager = new LinearLayoutManager(this);
-        myAdapter = new MyAdapter(pokemonDetails,context);
-
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        recyclerView.setAdapter(myAdapter);
     }
 
     private void loadRecyclerViewData(){
@@ -178,12 +148,10 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
                                         pokemonImage, pokemonArtwork, pokemonSprite, pokemonShinysprite));
 
                             }
-                            saveData();
 
                             myAdapter = new MyAdapter(pokemonDetails, MainActivity.this);
                             recyclerView.setAdapter(myAdapter);
                             myAdapter.setOnItemClickListener(MainActivity.this);
-                            saveData();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -194,9 +162,58 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(getApplicationContext(), volleyError.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                });
+                })
+        {
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    Cache.Entry cacheEntry = HttpHeaderParser.parseCacheHeaders(response);
+                    if (cacheEntry == null) {
+                        cacheEntry = new Cache.Entry();
+                    }
+                    final long cacheHitButRefreshed = 3 * 60 * 1000; // in 3 minutes cache will be hit, but also refreshed on background
+                    final long cacheExpired = 24 * 60 * 60 * 1000; // in 24 hours this cache entry expires completely
+                    long now = System.currentTimeMillis();
+                    final long softExpire = now + cacheHitButRefreshed;
+                    final long ttl = now + cacheExpired;
+                    cacheEntry.data = response.data;
+                    cacheEntry.softTtl = softExpire;
+                    cacheEntry.ttl = ttl;
+                    String headerValue;
+                    headerValue = response.headers.get("Date");
+                    if (headerValue != null) {
+                        cacheEntry.serverDate = HttpHeaderParser.parseDateAsEpoch(headerValue);
+                    }
+                    headerValue = response.headers.get("Last-Modified");
+                    if (headerValue != null) {
+                        cacheEntry.lastModified = HttpHeaderParser.parseDateAsEpoch(headerValue);
+                    }
+                    cacheEntry.responseHeaders = response.headers;
+                    final String jsonString = new String(response.data,
+                            HttpHeaderParser.parseCharset(response.headers));
+                    return Response.success(new String(jsonString), cacheEntry);
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                }
+            }
+
+            @Override
+            protected void deliverResponse(String response) {
+                super.deliverResponse(String.valueOf(response));
+            }
+
+            @Override
+            public void deliverError(VolleyError error) {
+                super.deliverError(error);
+            }
+
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError) {
+                return super.parseNetworkError(volleyError);
+            }
+        };
             RequestQueue requestQueue =  Volley.newRequestQueue(this);
             requestQueue.add(stringRequest);
     }
