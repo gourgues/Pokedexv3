@@ -22,6 +22,7 @@ import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.pokedexv3.MainActivity.EXTRA_SEARCH;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements Filterable {
 
     private List<PokemonDetails> pokemonDetails;
@@ -116,9 +117,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             else{
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for(PokemonDetails pokemon : pokemonDetailsFull){
+                    if(EXTRA_SEARCH == 0){
                     if(pokemon.getName().toLowerCase().contains(filterPattern)){
                         filteredList.add(pokemon);
-                    }
+                    }}
+                    if(EXTRA_SEARCH == 1){
+                        if(pokemon.getId().toLowerCase().contains(filterPattern)){
+                            filteredList.add(pokemon);
+                        }}
+                    if(EXTRA_SEARCH == 2){
+                        if(pokemon.getType().toLowerCase().contains(filterPattern)){
+                            filteredList.add(pokemon);
+                        }}
+                    if(EXTRA_SEARCH == 3){
+                        if(pokemon.getEv().toLowerCase().contains(filterPattern)){
+                            filteredList.add(pokemon);
+                        }}
+                    if(EXTRA_SEARCH == 4){
+                        if(pokemon.getAbilityname().toLowerCase().contains(filterPattern)||pokemon.getSecondabilityname().toLowerCase().contains(filterPattern)||pokemon.getHiddenabilityname().toLowerCase().contains(filterPattern)){
+                            filteredList.add(pokemon);
+                        }}
                 }
             }
             FilterResults results = new FilterResults();

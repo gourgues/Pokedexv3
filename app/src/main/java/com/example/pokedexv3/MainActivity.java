@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
     public static final String EXTRA_SPRITE = "pokemonSprite";
     public static final String EXTRA_SHINYSPRITE = "pokemonShinysprite";
 
+    public static int EXTRA_SEARCH = 0;
+
     private static final String URL_DATA = "https://raw.githubusercontent.com/gourgues/pokedex/master/pokedex4g.json";
 
     private RecyclerView recyclerView;
@@ -241,6 +243,31 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
             }
         });
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==R.id.tri_nom){
+            Toast.makeText(this,"recherche par nom", Toast.LENGTH_SHORT).show();
+            EXTRA_SEARCH = 0;
+        }
+        if(item.getItemId()==R.id.tri_id){
+            Toast.makeText(this,"recherche par id", Toast.LENGTH_SHORT).show();
+            EXTRA_SEARCH = 1;
+        }
+        if(item.getItemId()==R.id.tri_type){
+            Toast.makeText(this,"recherche par type", Toast.LENGTH_SHORT).show();
+            EXTRA_SEARCH = 2;
+        }
+        if(item.getItemId()==R.id.tri_ev){
+            Toast.makeText(this,"recherche par ev", Toast.LENGTH_SHORT).show();
+            EXTRA_SEARCH = 3;
+        }
+        if(item.getItemId()==R.id.tri_talent){
+            Toast.makeText(this,"recherche par talent", Toast.LENGTH_SHORT).show();
+            EXTRA_SEARCH = 4;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
