@@ -17,13 +17,15 @@
             android:orientation="vertical"
             android:gravity="center">
 
+
     <ImageView
         android:id="@+id/artworkViewDetail"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_marginTop="30dp"
         android:src="@mipmap/ic_launcher"
-        android:background="@drawable/pokemonbackgrounddetail"/>
+        android:cropToPadding="true"
+        />
 
     <TextView
         android:id="@+id/nameViewDetail"

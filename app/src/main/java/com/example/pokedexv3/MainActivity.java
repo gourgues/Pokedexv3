@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
     public static final String EXTRA_SPRITE = "pokemonSprite";
     public static final String EXTRA_SHINYSPRITE = "pokemonShinysprite";
 
-    private static final String URL_DATA = "https://raw.githubusercontent.com/gourgues/pokedex/master/pokedex.json";
+    private static final String URL_DATA = "https://raw.githubusercontent.com/gourgues/pokedex/master/pokedex4g.json";
 
     private RecyclerView recyclerView;
     private MyAdapter myAdapter;
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
                                 String pokemonWeight = o.getString("weight");
                                 String pokemonCatchrate = o.getString("catchrate");
                                 String pokemonEv = o.getString("ev");
-                                String pokemonAbilityname = o.getString("abilityname");
+                                String pokemonAbilityname = o.optString("abilityname");
                                 String pokemonAbilitydescription = o.getString("abilitydescription");
                                 String pokemonSecondabilityname = o.getString("secondabilityname");
                                 String pokemonSecondabilitydescription = o.getString("secondabilitydescription");
