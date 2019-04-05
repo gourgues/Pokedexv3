@@ -99,8 +99,8 @@ public class MainActivity extends AppCompatActivity implements MyAdapter.OnItemC
     private void loadRecyclerViewData(){
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("loading data...");
-        progressDialog.show();
+        //progressDialog.setMessage("loading data...");
+        //progressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 URL_DATA,
